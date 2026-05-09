@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class ParticipantDAOImpl implements ParticipantDAO {
@@ -18,27 +19,46 @@ public class ParticipantDAOImpl implements ParticipantDAO {
     }
 
     @Override
-    public Integer createParticipant(String name, Integer roomId) {
-        String sql = """
-                INSERT INTO participant (name, room_id)
-                VALUES (:name, :roomId)
-                RETURNING id
-                """;
-        return jdbcTemplate.queryForObject(sql, Map.of("name", name, "roomId", roomId), Integer.class);
+    public ParticipantResponse createParticipant(String name, Integer roomId) {
 
+        UUID publicId = UUID.randomUUID();
+
+        String sql = """
+            INSERT INTO participant (public_id, name, room_id)
+            VALUES (:publicId, :name, :roomId)
+            RETURNING id
+            """;
+
+        Integer id = jdbcTemplate.queryForObject(
+                sql,
+                Map.of(
+                        "publicId", publicId,
+                        "name", name,
+                        "roomId", roomId
+                ),
+                Integer.class
+        );
+
+        return new ParticipantResponse(
+                id,
+                publicId,
+                name,
+                roomId
+        );
     }
     @Override
     public List<ParticipantResponse> findByRoomId(Integer roomId) {
         String sql = """
-                SELECT id, name, room_id
+                SELECT id, public_id, name, room_id
                 FROM participant
                 WHERE room_id = :roomId
                 """;
 
         return jdbcTemplate.query(sql,
                 Map.of("roomId", roomId),
-                (rs, rowNum) ->  new ParticipantResponse(
+                (rs, rowNum) -> new ParticipantResponse(
                         rs.getInt("id"),
+                        UUID.fromString(rs.getString("public_id")),
                         rs.getString("name"),
                         rs.getInt("room_id")
                 ));

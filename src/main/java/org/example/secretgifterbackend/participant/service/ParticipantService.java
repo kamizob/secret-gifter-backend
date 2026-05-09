@@ -15,8 +15,10 @@ public class ParticipantService {
         this.participantDAO = participantDAO;
     }
     public ParticipantResponse createParticipant(CreateParticipantRequest request) {
-        Integer id = participantDAO.createParticipant(request.name(), request.roomId());
-        return new ParticipantResponse(id, request.name(), request.roomId());
+        return participantDAO.createParticipant(
+                request.name(),
+                request.roomId()
+        );
     }
     public List<ParticipantResponse> getByRoomId(Integer roomId) {
         return participantDAO.findByRoomId(roomId);

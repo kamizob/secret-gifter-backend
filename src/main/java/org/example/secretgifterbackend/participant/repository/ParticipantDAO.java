@@ -5,6 +5,6 @@ import org.example.secretgifterbackend.participant.api.response.ParticipantRespo
 import java.util.List;
 
 public interface ParticipantDAO {
-    Integer createParticipant(String name, Integer roomId);
+    ParticipantResponse createParticipant(String name, Integer roomId);
     List<ParticipantResponse> findByRoomId(Integer roomId);
 }
