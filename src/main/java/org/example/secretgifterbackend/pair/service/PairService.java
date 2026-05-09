@@ -6,6 +6,7 @@ import org.example.secretgifterbackend.pair.domain.PairDTO;
 import org.example.secretgifterbackend.pair.repository.PairDAO;
 import org.example.secretgifterbackend.participant.api.response.ParticipantResponse;
 import org.example.secretgifterbackend.participant.repository.ParticipantDAO;
+import org.example.secretgifterbackend.wishlist.repository.WishListDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +18,12 @@ import java.util.UUID;
 public class PairService {
     private final ParticipantDAO participantDAO;
     private final PairDAO pairDAO;
+    private final WishListDAO wishListDAO;
 
-    public PairService(ParticipantDAO participantDAO, PairDAO pairDAO) {
+    public PairService(ParticipantDAO participantDAO, PairDAO pairDAO, WishListDAO wishListDAO) {
         this.participantDAO = participantDAO;
         this.pairDAO = pairDAO;
+        this.wishListDAO = wishListDAO;
     }
     public List<PairResponse> generatePairs(Integer roomId) {
         var participants = participantDAO.findByRoomId(roomId);
@@ -73,10 +76,12 @@ public class PairService {
         var receiver = participantDAO.findById(
                 pair.receiverParticipantId()
         );
+        var wishlist = wishListDAO.findByParticipantId(receiver.id());
 
         return new RevealPairResponse(
                 participant.name(),
-                receiver.name()
+                receiver.name(),
+                wishlist
         );
     }
 }
