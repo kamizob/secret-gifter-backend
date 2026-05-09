@@ -63,4 +63,53 @@ public class ParticipantDAOImpl implements ParticipantDAO {
                         rs.getInt("room_id")
                 ));
     }
+    @Override
+    public ParticipantResponse findByPublicId(UUID publicId) {
+
+        String sql = """
+            SELECT
+                id,
+                public_id,
+                name,
+                room_id
+            FROM participant
+            WHERE public_id = :publicId
+            """;
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Map.of("publicId", publicId),
+                (rs, rowNum) -> new ParticipantResponse(
+                        rs.getInt("id"),
+                        UUID.fromString(rs.getString("public_id")),
+                        rs.getString("name"),
+                        rs.getInt("room_id")
+                )
+        );
+    }
+    @Override
+    public ParticipantResponse findById(Integer id) {
+
+        String sql = """
+            SELECT
+                id,
+                public_id,
+                name,
+                room_id
+            FROM participant
+            WHERE public_id = :publicId
+            """;
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Map.of("id", id),
+                (rs, rowNum) -> new ParticipantResponse(
+                        rs.getInt("id"),
+                        UUID.fromString(rs.getString("public_id")),
+                        rs.getString("name"),
+                        rs.getInt("room_id")
+                )
+        );
+    }
+
 }

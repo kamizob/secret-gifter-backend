@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/pairs")
@@ -34,10 +35,10 @@ public class PairController {
     }
     @GetMapping("/reveal")
     public RevealPairResponse reveal(
-            @RequestParam String name,
+            @RequestParam UUID publicId,
             @RequestParam Integer roomId
     ) {
-        return pairService.reveal(name, roomId);
+        return pairService.reveal(publicId, roomId);
     }
 
 }
