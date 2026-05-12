@@ -91,14 +91,14 @@ public class ParticipantDAOImpl implements ParticipantDAO {
     public ParticipantResponse findById(Integer id) {
 
         String sql = """
-            SELECT
-                id,
-                public_id,
-                name,
-                room_id
-            FROM participant
-            WHERE public_id = :publicId
-            """;
+        SELECT
+            id,
+            public_id,
+            name,
+            room_id
+        FROM participant
+        WHERE id = :id
+        """;
 
         return jdbcTemplate.queryForObject(
                 sql,

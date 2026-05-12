@@ -19,7 +19,7 @@ public class WishListDAOImpl implements WishListDAO {
     @Override
     public Integer create(Integer participantId, String itemText) {
         String sql = """
-                INSERT INTO wishlist (participant_id, item_text)
+                INSERT INTO wishlist_item (participant_id, item_text)
                 VALUES (:participantId, :itemText)
                 RETURNING id
                 """;
