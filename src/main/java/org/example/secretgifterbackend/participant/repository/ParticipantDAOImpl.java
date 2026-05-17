@@ -111,5 +111,18 @@ public class ParticipantDAOImpl implements ParticipantDAO {
                 )
         );
     }
+    @Override
+    public void deleteById(Integer id) {
+
+        String sql = """
+        DELETE FROM participant
+        WHERE id = :id
+        """;
+
+        jdbcTemplate.update(
+                sql,
+                Map.of("id", id)
+        );
+    }
 
 }

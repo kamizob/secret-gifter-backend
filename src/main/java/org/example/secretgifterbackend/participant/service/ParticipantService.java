@@ -23,4 +23,8 @@ public class ParticipantService {
     public List<ParticipantResponse> getByRoomId(Integer roomId) {
         return participantDAO.findByRoomId(roomId);
     }
+
+    public void deleteParticipant(Integer id) {
+        participantDAO.deleteById(id);
+    }
 }

@@ -10,4 +10,5 @@ public interface ParticipantDAO {
     List<ParticipantResponse> findByRoomId(Integer roomId);
     ParticipantResponse findByPublicId(UUID publicId);
     ParticipantResponse findById(Integer id);
+    void deleteById(Integer id);
 }
