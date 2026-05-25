@@ -1,9 +1,13 @@
 package org.example.secretgifterbackend.room.api.controller;
 
+import org.example.secretgifterbackend.room.api.request.CreateRoomRequest;
 import org.example.secretgifterbackend.room.api.response.CreateRoomResponse;
+import org.example.secretgifterbackend.room.api.response.JoinRoomResponse;
 import org.example.secretgifterbackend.room.service.RoomService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,5 +22,10 @@ public class RoomController {
     @PostMapping
     public CreateRoomResponse createRoom() {
         return roomService.createRoom();
+    }
+    @PostMapping("/join")
+    public JoinRoomResponse joinRoom(@RequestParam String code) {
+        return roomService.joinRoom(code);
+
     }
 }

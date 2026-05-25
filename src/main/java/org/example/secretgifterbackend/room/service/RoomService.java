@@ -2,6 +2,7 @@ package org.example.secretgifterbackend.room.service;
 
 import org.example.secretgifterbackend.room.api.request.CreateRoomRequest;
 import org.example.secretgifterbackend.room.api.response.CreateRoomResponse;
+import org.example.secretgifterbackend.room.api.response.JoinRoomResponse;
 import org.example.secretgifterbackend.room.domain.RoomStatus;
 import org.example.secretgifterbackend.room.repository.RoomDAO;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,13 @@ public class RoomService {
             sb.append(chars.charAt(index));
         }
         return sb.toString();
+    }
+    public JoinRoomResponse joinRoom(String code) {
+
+        Integer roomId = roomDAO.findRoomIdByCode(
+                code.toUpperCase()
+        );
+
+        return new JoinRoomResponse(roomId);
     }
 }

@@ -2,6 +2,7 @@ package org.example.secretgifterbackend.room.repository;
 
 import org.example.secretgifterbackend.room.api.response.CreateRoomResponse;
 import org.example.secretgifterbackend.room.domain.RoomStatus;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,10 +46,15 @@ public class RoomDAOImpl implements RoomDAO {
             WHERE code = :code
             """;
 
-        return jdbcTemplate.queryForObject(
-                sql,
-                Map.of("code", code),
-                Integer.class
-        );
+        try {
+            return jdbcTemplate.queryForObject(
+                    sql,
+                    Map.of("code", code),
+                    Integer.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            throw new RuntimeException("Room not found");
+        }
+
     }
 }
