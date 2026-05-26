@@ -1,7 +1,8 @@
 CREATE TABLE room (
                       id SERIAL PRIMARY KEY,
                       code VARCHAR(10) UNIQUE NOT NULL,
-                      status VARCHAR(20) NOT NULL
+                      status VARCHAR(20) NOT NULL,
+                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE participant (

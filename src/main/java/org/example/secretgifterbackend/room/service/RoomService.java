@@ -3,9 +3,12 @@ package org.example.secretgifterbackend.room.service;
 import org.example.secretgifterbackend.room.api.request.CreateRoomRequest;
 import org.example.secretgifterbackend.room.api.response.CreateRoomResponse;
 import org.example.secretgifterbackend.room.api.response.JoinRoomResponse;
+import org.example.secretgifterbackend.room.api.response.RoomHistoryResponse;
 import org.example.secretgifterbackend.room.domain.RoomStatus;
 import org.example.secretgifterbackend.room.repository.RoomDAO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RoomService {
@@ -37,5 +40,8 @@ public class RoomService {
         );
 
         return new JoinRoomResponse(roomId);
+    }
+    public List<RoomHistoryResponse> getHistory() {
+        return roomDAO.getHistory();
     }
 }
