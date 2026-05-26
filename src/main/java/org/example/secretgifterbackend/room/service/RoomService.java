@@ -44,4 +44,14 @@ public class RoomService {
     public List<RoomHistoryResponse> getHistory() {
         return roomDAO.getHistory();
     }
+    public void startRoom(Integer roomId) {
+
+        roomDAO.updateStatus(
+                roomId,
+                RoomStatus.STARTED
+        );
+    }
+    public RoomStatus getStatus(Integer roomId) {
+        return roomDAO.getStatus(roomId);
+    }
 }

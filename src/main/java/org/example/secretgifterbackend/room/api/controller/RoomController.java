@@ -6,6 +6,7 @@ import org.example.secretgifterbackend.room.api.response.JoinRoomResponse;
 import org.example.secretgifterbackend.room.api.response.RoomHistoryResponse;
 import org.example.secretgifterbackend.room.service.RoomService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +35,15 @@ public class RoomController {
     @GetMapping("/history")
     public List<RoomHistoryResponse> getHistory() {
         return roomService.getHistory();
+    }
+    @PostMapping("/{roomId}/start")
+    public void startRoom(@PathVariable Integer roomId) {
+        roomService.startRoom(roomId);
+    }
+    @GetMapping("/{roomId}/status")
+    public String getStatus(@PathVariable Integer roomId) {
+        return roomService
+                .getStatus(roomId)
+                .name();
     }
 }

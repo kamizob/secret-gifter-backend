@@ -10,5 +10,7 @@ public interface RoomDAO {
     CreateRoomResponse createRoom(String code, RoomStatus status);
     Integer findRoomIdByCode(String code);
     List<RoomHistoryResponse> getHistory();
+    void updateStatus(Integer roomId, RoomStatus status);
+    RoomStatus getStatus(Integer roomId);
 
 }

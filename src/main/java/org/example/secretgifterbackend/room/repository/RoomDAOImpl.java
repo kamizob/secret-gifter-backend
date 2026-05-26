@@ -85,4 +85,41 @@ public class RoomDAOImpl implements RoomDAO {
                 )
         );
     }
+    @Override
+    public void updateStatus(
+            Integer roomId,
+            RoomStatus status
+    ) {
+
+        String sql = """
+        UPDATE room
+        SET status = :status
+        WHERE id = :roomId
+        """;
+
+        jdbcTemplate.update(
+                sql,
+                Map.of(
+                        "roomId", roomId,
+                        "status", status.name()
+                )
+        );
+    }
+    @Override
+    public RoomStatus getStatus(Integer roomId) {
+
+        String sql = """
+        SELECT status
+        FROM room
+        WHERE id = :roomId
+        """;
+
+        String status = jdbcTemplate.queryForObject(
+                sql,
+                Map.of("roomId", roomId),
+                String.class
+        );
+
+        return RoomStatus.valueOf(status);
+    }
 }
