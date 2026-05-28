@@ -3,6 +3,7 @@ package org.example.secretgifterbackend.pair.repository;
 import org.example.secretgifterbackend.pair.api.response.PairResponse;
 import org.example.secretgifterbackend.pair.domain.PairDTO;
 import org.example.secretgifterbackend.participant.api.response.ParticipantResponse;
+import org.example.secretgifterbackend.wishlist.repository.WishListDAO;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +14,12 @@ import java.util.UUID;
 @Repository
 public class PairDAOImpl implements PairDAO {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final WishListDAO wishListDAO;
 
-    public PairDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+    public PairDAOImpl(NamedParameterJdbcTemplate jdbcTemplate,
+                       WishListDAO wishListDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.wishListDAO = wishListDAO;
     }
 
     @Override
@@ -101,9 +105,11 @@ public class PairDAOImpl implements PairDAO {
     public List<PairResponse> findPairResponsesByRoomId(Integer roomId) {
 
         String sql = """
+            
             SELECT
                 giver.name AS giver_name,
-                receiver.name AS receiver_name
+                receiver.name AS receiver_name,
+                receiver.id AS receiver_id
             FROM pair p
             JOIN participant giver
                 ON p.giver_participant_id = giver.id
@@ -117,7 +123,10 @@ public class PairDAOImpl implements PairDAO {
                 Map.of("roomId", roomId),
                 (rs, rowNum) -> new PairResponse(
                         rs.getString("giver_name"),
-                        rs.getString("receiver_name")
+                        rs.getString("receiver_name"),
+                        wishListDAO.findByParticipantId(
+                                rs.getInt("receiver_id")
+                        )
                 )
         );
     }

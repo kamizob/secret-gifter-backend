@@ -1,8 +1,7 @@
 package org.example.secretgifterbackend.participant.repository;
 
-import org.example.secretgifterbackend.participant.api.request.CreateParticipantRequest;
 import org.example.secretgifterbackend.participant.api.response.ParticipantResponse;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.example.secretgifterbackend.wishlist.repository.WishListDAO;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +12,12 @@ import java.util.UUID;
 @Repository
 public class ParticipantDAOImpl implements ParticipantDAO {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final WishListDAO wishListDAO;
 
-    public ParticipantDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+    public ParticipantDAOImpl(NamedParameterJdbcTemplate jdbcTemplate,
+                              WishListDAO wishListDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.wishListDAO = wishListDAO;
     }
 
     @Override
@@ -43,7 +45,8 @@ public class ParticipantDAOImpl implements ParticipantDAO {
                 id,
                 publicId,
                 name,
-                roomId
+                roomId,
+                List.of()
         );
     }
     @Override
@@ -60,7 +63,8 @@ public class ParticipantDAOImpl implements ParticipantDAO {
                         rs.getInt("id"),
                         UUID.fromString(rs.getString("public_id")),
                         rs.getString("name"),
-                        rs.getInt("room_id")
+                        rs.getInt("room_id"),
+                        wishListDAO.findByParticipantId(rs.getInt("id"))
                 ));
     }
     @Override
@@ -83,7 +87,8 @@ public class ParticipantDAOImpl implements ParticipantDAO {
                         rs.getInt("id"),
                         UUID.fromString(rs.getString("public_id")),
                         rs.getString("name"),
-                        rs.getInt("room_id")
+                        rs.getInt("room_id"),
+                        wishListDAO.findByParticipantId(rs.getInt("id"))
                 )
         );
     }
@@ -107,7 +112,8 @@ public class ParticipantDAOImpl implements ParticipantDAO {
                         rs.getInt("id"),
                         UUID.fromString(rs.getString("public_id")),
                         rs.getString("name"),
-                        rs.getInt("room_id")
+                        rs.getInt("room_id"),
+                        wishListDAO.findByParticipantId(rs.getInt("id"))
                 )
         );
     }

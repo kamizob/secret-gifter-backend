@@ -1,6 +1,6 @@
 package org.example.secretgifterbackend.room.service;
 
-import org.example.secretgifterbackend.room.api.request.CreateRoomRequest;
+
 import org.example.secretgifterbackend.room.api.response.CreateRoomResponse;
 import org.example.secretgifterbackend.room.api.response.JoinRoomResponse;
 import org.example.secretgifterbackend.room.api.response.RoomHistoryResponse;

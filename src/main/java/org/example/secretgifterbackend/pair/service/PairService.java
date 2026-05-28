@@ -52,7 +52,8 @@ public class PairService {
             response.add(
                     new PairResponse(
                             giver.name(),
-                            receiver.name()
+                            receiver.name(),
+                            List.of()
                     )
             );
         }

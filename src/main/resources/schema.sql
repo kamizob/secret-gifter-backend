@@ -14,7 +14,7 @@ CREATE TABLE participant (
 
 CREATE TABLE wishlist_item (
                                id SERIAL PRIMARY KEY,
-                               participant_id INT REFERENCES participant(id),
+                               participant_id INT REFERENCES participant(id) ON DELETE CASCADE,
                                item_text VARCHAR(300) NOT NULL
 );
 
