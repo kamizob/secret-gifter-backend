@@ -77,6 +77,7 @@ public class PairService {
                 pair.receiverParticipantId()
         );
         var wishlist = wishListDAO.findByParticipantId(receiver.id());
+        System.out.println(wishlist);
 
         return new RevealPairResponse(
                 participant.name(),

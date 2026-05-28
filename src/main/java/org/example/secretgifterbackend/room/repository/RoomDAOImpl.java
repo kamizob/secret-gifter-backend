@@ -67,6 +67,7 @@ public class RoomDAOImpl implements RoomDAO {
             r.created_at,
             COUNT(p.id) AS participant_count
         FROM room r
+        WHERE r.status = 'FINISHED'
         LEFT JOIN participant p
             ON r.id = p.room_id
         GROUP BY r.id

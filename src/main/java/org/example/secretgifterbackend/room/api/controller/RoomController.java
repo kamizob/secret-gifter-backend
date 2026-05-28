@@ -46,4 +46,8 @@ public class RoomController {
                 .getStatus(roomId)
                 .name();
     }
+    @PostMapping("/{roomId}/finish")
+    public void finishRoom(@PathVariable Integer roomId) {
+        roomService.finishRoom(roomId);
+    }
 }

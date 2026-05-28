@@ -54,4 +54,11 @@ public class RoomService {
     public RoomStatus getStatus(Integer roomId) {
         return roomDAO.getStatus(roomId);
     }
+    public void finishRoom(Integer roomId) {
+
+        roomDAO.updateStatus(
+                roomId,
+                RoomStatus.FINISHED
+        );
+    }
 }
